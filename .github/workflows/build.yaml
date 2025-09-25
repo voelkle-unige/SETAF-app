@@ -1,0 +1,16 @@
+on:
+  push: {}
+  workflow_dispatch:
+    inputs:
+      data-sources:
+        description: URL to the sources of the data package
+        type: string
+        default: ${{ github.server_url }}/${{ github.repository_owner }}/SETAF-app-data/archive/main.zip
+jobs:
+  build:
+    uses: unige-lettres/existdb/.github/workflows/build.yaml@main
+    with:
+      existdb-version: 6.4.0
+      package-sources: |
+        ${{ inputs.data-sources }}
+        ${{ github.server_url }}/${{ github.repository }}/archive/${{ github.sha }}.zip
